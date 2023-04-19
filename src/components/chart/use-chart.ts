@@ -8,54 +8,7 @@
 import globalEventBus, { EVENT_NAME } from '@/utils/global-event-bus';
 import * as echarts from 'echarts/core';
 
-// 引入类型系统
 import {
-  BarSeriesOption,
-  BoxplotSeriesOption,
-  CandlestickSeriesOption,
-  CustomSeriesOption,
-  EffectScatterSeriesOption,
-  FunnelSeriesOption,
-  GaugeSeriesOption,
-  GraphSeriesOption,
-  HeatmapSeriesOption,
-  LineSeriesOption,
-  LinesSeriesOption,
-  MapSeriesOption,
-  ParallelSeriesOption,
-  PictorialBarSeriesOption,
-  PieSeriesOption,
-  RadarSeriesOption,
-  SankeySeriesOption,
-  ScatterSeriesOption,
-  SunburstSeriesOption,
-  ThemeRiverSeriesOption,
-  TreeSeriesOption,
-  TreemapSeriesOption,
-} from 'echarts/charts';
-
-import {
-  AriaComponentOption,
-  AxisPointerComponentOption,
-  BrushComponentOption,
-  CalendarComponentOption,
-  DataZoomComponentOption,
-  GeoComponentOption,
-  GraphicComponentOption,
-  GridComponentOption,
-  LegendComponentOption,
-  MarkAreaComponentOption,
-  MarkLineComponentOption,
-  MarkPointComponentOption,
-  PolarComponentOption,
-  RadarComponentOption,
-  SingleAxisComponentOption,
-  TimelineComponentOption,
-  ToolboxComponentOption,
-  VisualMapComponentOption,
-  TitleComponentOption,
-  TooltipComponentOption,
-  DatasetComponentOption,
   TooltipComponent,
   TitleComponent,
   GridComponent,
@@ -66,55 +19,7 @@ import { LabelLayout, UniversalTransition } from 'echarts/features';
 // 引入 Canvas 渲染器，注意引入 CanvasRenderer 或者 SVGRenderer 是必须的一步
 import { CanvasRenderer } from 'echarts/renderers';
 import { onMounted, Ref, ref, watch } from 'vue';
-
-// EchartOptions类型
-export type ECOption = echarts.ComposeOption<
-  // 组件
-  | AriaComponentOption
-  | AxisPointerComponentOption
-  | BrushComponentOption
-  | CalendarComponentOption
-  | DataZoomComponentOption
-  | GeoComponentOption
-  | GraphicComponentOption
-  | GridComponentOption
-  | LegendComponentOption
-  | MarkAreaComponentOption
-  | MarkLineComponentOption
-  | MarkPointComponentOption
-  | PolarComponentOption
-  | RadarComponentOption
-  | SingleAxisComponentOption
-  | TimelineComponentOption
-  | ToolboxComponentOption
-  | VisualMapComponentOption
-  | TitleComponentOption
-  | TooltipComponentOption
-  | DatasetComponentOption
-  // 图表
-  | BarSeriesOption
-  | BoxplotSeriesOption
-  | CandlestickSeriesOption
-  | CustomSeriesOption
-  | EffectScatterSeriesOption
-  | FunnelSeriesOption
-  | GaugeSeriesOption
-  | GraphSeriesOption
-  | HeatmapSeriesOption
-  | LineSeriesOption
-  | LinesSeriesOption
-  | MapSeriesOption
-  | ParallelSeriesOption
-  | PictorialBarSeriesOption
-  | PieSeriesOption
-  | RadarSeriesOption
-  | SankeySeriesOption
-  | ScatterSeriesOption
-  | SunburstSeriesOption
-  | ThemeRiverSeriesOption
-  | TreeSeriesOption
-  | TreemapSeriesOption
->;
+import { ECOption } from './types';
 
 // 图表调色盘
 export const BASE_COLORS = [

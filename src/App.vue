@@ -2,7 +2,8 @@
 import Chart from '@/components/chart/index.vue';
 import { BarChart } from 'echarts/charts';
 import { onMounted, ref } from 'vue';
-import { BASE_COLORS, ECOption } from '@/components/chart/use-chart';
+import { BASE_COLORS } from '@/components/chart/use-chart';
+import { ECOption } from '@/components/chart/types';
 
 const options = ref<ECOption>();
 

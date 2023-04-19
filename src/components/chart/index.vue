@@ -3,8 +3,9 @@
 </template>
 
 <script setup lang="ts">
-import { ECOption, useChart } from './use-chart';
+import { useChart } from './use-chart';
 import { toRefs } from 'vue';
+import { ECOption } from './types';
 
 const props = defineProps<{
     options: ECOption | undefined;
