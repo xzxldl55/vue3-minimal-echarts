@@ -74,31 +74,32 @@ const useChart = (
   echarts.use([...setAndRemoveDuplicatesEchartUsed(usedComponents)]);
 
   const chartDOMRef = ref<HTMLElement>();
-  const chart = ref<echarts.ECharts>();
+  // echarts对象 --> 这里不能用响应式对象否则会出现 tooltip 在 axis 模式下不显示的问题
+  let chart: echarts.ECharts;
 
   // 初始化图表
   const initChart = () => {
     if (!chartDOMRef.value) {
       return;
     }
-    chart.value = echarts.init(chartDOMRef.value);
+    chart = echarts.init(chartDOMRef.value);
 
     if (!options.value) {
       return;
     }
-    chart.value.setOption(options.value);
+    chart.setOption(options.value);
     !noResize &&
       globalEventBus.on(EVENT_NAME.WINDOW_RESIZE, () => {
-        chart?.value?.resize();
+        chart?.resize();
       });
   };
 
   // 更新配置
   const updateOptions = () =>
-    options.value && chart.value?.setOption(options.value);
+    options.value && chart?.setOption(options.value);
 
   const loading = () => {
-    chart.value?.showLoading({
+    chart?.showLoading({
       text: '数据加载中',
       textColor: '#fff',
       effect: 'whirling',
@@ -107,7 +108,7 @@ const useChart = (
   };
 
   const done = () => {
-    chart.value?.hideLoading();
+    chart?.hideLoading();
   };
 
   onMounted(() => !noInit && initChart());
