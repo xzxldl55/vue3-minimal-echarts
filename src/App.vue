@@ -7,6 +7,8 @@ import { ECOption } from '@/components/chart/types';
 
 const options = ref<ECOption>();
 
+const chartRef = ref<typeof Chart>();
+
 const mockData = [
   {
     name: '小明',
@@ -61,8 +63,10 @@ const sort = () => {
 };
 
 onMounted(() => {
+  
   // 简单模拟下请求数据，异步设置options
   setTimeout(() => {
+    console.log('App.vue chart - ', chartRef.value?.chart.instance)
     options.value = {
       title: {
         show: true,
@@ -84,7 +88,7 @@ onMounted(() => {
       },
       tooltip: {
         show: true,
-        trigger: 'item',
+        trigger: 'axis',
         axisPointer: {
           type: 'shadow',
         },
@@ -109,6 +113,7 @@ onMounted(() => {
   <button @click="changeColors">换个颜色！</button>
   <button @click="sort">排个序</button>
   <chart
+    ref="chartRef"
     class="bar-chart__demo"
     :used-components="[BarChart]"
     :options="options"
