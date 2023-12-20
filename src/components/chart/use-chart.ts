@@ -75,31 +75,35 @@ const useChart = (
 
   const chartDOMRef = ref<HTMLElement>();
   // echarts对象 --> 这里不能用响应式对象否则会出现 tooltip 在 axis 模式下不显示的问题
-  let chart: echarts.ECharts;
+  //    但这里必须使用一个引用类型，否则 chart 的实例将无法被传递出去
+  const chart: { instance: echarts.ECharts | undefined } = {
+    instance: undefined
+  };
 
   // 初始化图表
   const initChart = () => {
     if (!chartDOMRef.value) {
       return;
     }
-    chart = echarts.init(chartDOMRef.value);
+    chart.instance = echarts.init(chartDOMRef.value);
+
 
     if (!options.value) {
       return;
     }
-    chart.setOption(options.value);
+    chart.instance.setOption(options.value);
     !noResize &&
       globalEventBus.on(EVENT_NAME.WINDOW_RESIZE, () => {
-        chart?.resize();
+        chart.instance?.resize();
       });
   };
 
   // 更新配置
   const updateOptions = () =>
-    options.value && chart?.setOption(options.value);
+    options.value && chart.instance?.setOption(options.value);
 
   const loading = () => {
-    chart?.showLoading({
+    chart.instance?.showLoading({
       text: '数据加载中',
       textColor: '#fff',
       effect: 'whirling',
@@ -108,10 +112,12 @@ const useChart = (
   };
 
   const done = () => {
-    chart?.hideLoading();
+    chart.instance?.hideLoading();
   };
 
-  onMounted(() => !noInit && initChart());
+  onMounted(() => {
+    !noInit && initChart()
+  });
   watch(options, updateOptions, {
     deep: true,
   });
