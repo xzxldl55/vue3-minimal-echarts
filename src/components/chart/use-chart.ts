@@ -18,7 +18,7 @@ import {
 import { LabelLayout, UniversalTransition } from 'echarts/features';
 // 引入 Canvas 渲染器，注意引入 CanvasRenderer 或者 SVGRenderer 是必须的一步
 import { CanvasRenderer } from 'echarts/renderers';
-import { onMounted, Ref, ref, watch } from 'vue';
+import { onMounted, Ref, ref, shallowRef, watch } from 'vue';
 import { ECOption } from './types';
 
 // 图表调色盘
@@ -75,35 +75,33 @@ const useChart = (
 
   const chartDOMRef = ref<HTMLElement>();
   // echarts对象 --> 这里不能用响应式对象否则会出现 tooltip 在 axis 模式下不显示的问题
-  //    但这里必须使用一个引用类型，否则 chart 的实例将无法被传递出去
-  const chart: { instance: echarts.ECharts | undefined } = {
-    instance: undefined
-  };
+  // shallowRef可解决tooltip 在 axis 模式下不显示的问题
+  const chart = shallowRef<echarts.ECharts | null>(null)
 
   // 初始化图表
   const initChart = () => {
     if (!chartDOMRef.value) {
       return;
     }
-    chart.instance = echarts.init(chartDOMRef.value);
+    chart.value = echarts.init(chartDOMRef.value);
 
 
     if (!options.value) {
       return;
     }
-    chart.instance.setOption(options.value);
+    chart.value.setOption(options.value);
     !noResize &&
       globalEventBus.on(EVENT_NAME.WINDOW_RESIZE, () => {
-        chart.instance?.resize();
+        chart.value?.resize();
       });
   };
 
   // 更新配置
   const updateOptions = () =>
-    options.value && chart.instance?.setOption(options.value);
+    options.value && chart.value?.setOption(options.value);
 
   const loading = () => {
-    chart.instance?.showLoading({
+    chart.value?.showLoading({
       text: '数据加载中',
       textColor: '#fff',
       effect: 'whirling',
@@ -112,7 +110,7 @@ const useChart = (
   };
 
   const done = () => {
-    chart.instance?.hideLoading();
+    chart.value?.hideLoading();
   };
 
   onMounted(() => {

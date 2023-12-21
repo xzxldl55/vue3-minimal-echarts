@@ -66,7 +66,7 @@ onMounted(() => {
   
   // 简单模拟下请求数据，异步设置options
   setTimeout(() => {
-    console.log('App.vue chart - ', chartRef.value?.chart.instance)
+    console.log('App.vue chart - ', chartRef.value?.chart)
     options.value = {
       title: {
         show: true,
